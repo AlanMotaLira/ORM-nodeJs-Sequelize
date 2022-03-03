@@ -8,7 +8,7 @@ RUN npm install -g npm@latest
 COPY package.json package-lock.json* ./
 RUN npm install --no-optional && npm cache clean --force
 WORKDIR /home/node/app/projeto
-CMD node api/index.js
+CMD npm run start
 
 # comando abaixo abre direto a execução do node
 # docker-entrypoint.sh

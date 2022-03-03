@@ -3,8 +3,8 @@ services:
   node:
     image: node-orm:1.0
     container_name: node-orm
+    restart: always
     working_dir: /home/node/app/projeto
-    user: node
     networks:
       - api-sequelize
     ports:
@@ -22,7 +22,9 @@ services:
     container_name: mysql-orm
     environment:
       MYSQL_ROOT_PASSWORD: walter
-      MYSQL_DATABASE: teste_db
+      MYSQL_DATABASE: padrao
+      MYSQL_USER: walter
+      MYSQL_PASSWORD: walter
     ports:
       - "3306:3306"
     volumes:
