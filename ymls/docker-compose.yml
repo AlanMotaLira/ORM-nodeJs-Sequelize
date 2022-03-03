@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+  node:
+    image: node-orm:1.0
+    container_name: node-orm
+    working_dir: /home/node/app/projeto
+    user: node
+    networks:
+      - api-sequelize
+    ports:
+      - "8080:8080"
+      - "8000:8000"
+    volumes:
+      - ../:/home/node/app/projeto
+      - ../package-lock.json:/home/node/app/package-lock.json
+      - ../package.json:/home/node/app/package.json
+    depends_on:
+      - "mysql"
+
+  mysql:
+    image: mysql:8.0.28-oracle
+    container_name: mysql-orm
+    environment:
+      MYSQL_ROOT_PASSWORD: walter
+      MYSQL_DATABASE: teste_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql:/var/lib/mysql
+      - mysql_config:/etc/mysql
+    networks:
+      - api-sequelize
+
+networks:
+  api-sequelize:
+    driver: bridge
+
+volumes:
+  mysql:
+  mysql_config:
