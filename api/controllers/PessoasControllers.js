@@ -9,6 +9,18 @@ class PessoaController {
       return res.status(500).json(err.message);
     }
   }
+
+  static async pegaUmaPessoa(req, res) {
+    const { id } = req.params;
+    try {
+      const pessoa = await database.Pessoas.findOne({
+        whire: { id: Number(id) },
+      });
+      return res.status(200).json(pessoa);
+    } catch (err) {
+      return res.status(500).json(err);
+    }
+  }
 }
 
 module.exports = PessoaController;
