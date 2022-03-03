@@ -1,6 +1,6 @@
 const database = require("../models");
 
-class PessoasController {
+class PessoaController {
   static async pegaTodasAsPessoas(req, res) {
     try {
       const todasAsPessoas = await database.Pessoas.findAll();
@@ -11,4 +11,4 @@ class PessoasController {
   }
 }
 
-module.exports = PessoasController
+module.exports = PessoaController;
