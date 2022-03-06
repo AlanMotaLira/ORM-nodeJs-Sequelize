@@ -10,10 +10,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Pessoas.hasMaby(models.Turmas, {
+      Pessoas.hasMany(models.Turmas, {
         foreignKey:'docente_id'
       })
-      Pessoas.hasMaby(models.Matriculas,{
+      Pessoas.hasMany(models.Matriculas,{
         foreignKey:'estudante_id'
       })
     }
