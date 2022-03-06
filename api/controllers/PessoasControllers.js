@@ -14,7 +14,7 @@ class PessoaController {
     const { id } = req.params;
     try {
       const pessoa = await database.Pessoas.findOne({
-        whire: { id: Number(id) },
+        where: { id: Number(id) },
       });
       return res.status(200).json(pessoa);
     } catch (err) {
