@@ -1,12 +1,18 @@
-const {Router} = require('express')
-const PessoaController = require('../controllers/PessoasControllers')
+const { Router } = require("express");
+const { PessoaController } = require("../controllers/");
 
-const router = Router()
+const router = Router();
 
-router.get('/pessoas', PessoaController.pegaTodasAsPessoas)
-router.get('/pessoas/:id',PessoaController.pegaUmaPessoa)
-router.post('/pessoas', PessoaController.criarPessoa)
-router.put('/pessoas/:id', PessoaController.atualizarRegistro)
-router.delete('/pessoas/:id', PessoaController.removerPessoa)
+router
+  .get("/pessoas", PessoaController.pegaTodasAsPessoas)
+  .get("/pessoas/:id", PessoaController.pegaUmaPessoa)
+  .get(
+    "/pessoas/:idUsuario/matriculas/:idMatricula",
+    PessoaController.pegaUmaMatricula
+  )
+  .post("/pessoas", PessoaController.criarPessoa)
+  .post("pessoas/:idUsuario/matricula", PessoaController.criarMatricula)
+  .put("/pessoas/:id", PessoaController.atualizarRegistro)
+  .delete("/pessoas/:id", PessoaController.removerPessoa);
 
-module.exports = router
+module.exports = router;
