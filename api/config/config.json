@@ -1,9 +1,9 @@
 {
   "development": {
     "username": "root",
-    "password": "walter",
+    "password": "abcdefg",
     "database": "escola_ingles",
-    "host": "172.18.0.2",
+    "host": "mysql-orm",
     "dialect": "mysql"
   },
   "test": {

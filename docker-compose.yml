@@ -27,10 +27,11 @@ services:
     image: mysql:8.0.28-oracle
     container_name: mysql-orm
     environment:
-      MYSQL_ROOT_PASSWORD: walter
+      MYSQL_ROOT_PASSWORD: abcdefg
       MYSQL_DATABASE: escola_ingles
       MYSQL_USER: node
-      MYSQL_PASSWORD: walter
+      MYSQL_PASSWORD: abcdefg
+      network_mode:   
     ports:
       - "3307:3306"
     restart: unless-stopped
