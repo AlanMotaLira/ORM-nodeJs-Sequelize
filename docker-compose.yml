@@ -1,19 +1,24 @@
 version: "3.9"
 services:
   node:
+    build: 
+      dockerfile: dockerfile
+      context: .
     image: node-orm:1.0
     container_name: node-orm
-    restart: always
-    working_dir: /home/node/app/projeto
+    restart: unless-stopped
+    working_dir: /home/node/app/api
     networks:
       - api-sequelize
     ports:
       - "8080:8080"
       - "8000:8000"
+    stdin_open: true
+    tty: true
     volumes:
-      - ../:/home/node/app/projeto
-      - ../package-lock.json:/home/node/app/package-lock.json
-      - ../package.json:/home/node/app/package.json
+      - ./api/:/home/node/app/api
+      - ./package-lock.json:/home/node/app/package-lock.json
+      - ./package.json:/home/node/app/package.json
     depends_on:
       - "mysql"
 
@@ -23,10 +28,11 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: walter
       MYSQL_DATABASE: escola_ingles
-      MYSQL_USER: root
+      MYSQL_USER: node
       MYSQL_PASSWORD: walter
     ports:
-      - "3306:3306"
+      - "3307:3306"
+    restart: unless-stopped
     volumes:
       - mysql:/var/lib/mysql
       - mysql_config:/etc/mysql
