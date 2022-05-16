@@ -19,6 +19,7 @@ services:
       - ./api/:/home/node/app/api
       - ./package-lock.json:/home/node/app/package-lock.json
       - ./package.json:/home/node/app/package.json
+      - ./.eslintrc.json:/home/node/app/.eslintrc.json
     depends_on:
       - "mysql"
 
