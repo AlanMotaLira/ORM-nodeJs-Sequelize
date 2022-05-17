@@ -18,5 +18,5 @@ class TurmaControllers {
 
   static async removerTurma (req, res) {
 
-}
+  }
 }

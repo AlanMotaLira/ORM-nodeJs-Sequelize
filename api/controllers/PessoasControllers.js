@@ -1,9 +1,18 @@
 const database = require('../models')
 
 class PessoaController {
+  static async pegaPessoasAtivas (__, res) {
+    try {
+      const pessoasAtivas = await database.Pessoas.findAll()
+      return res.status(200).json(pessoasAtivas)
+    } catch (err) {
+      return res.status(500).json(err.message)
+    }
+  }
+
   static async pegaTodasAsPessoas (__, res) {
     try {
-      const todasAsPessoas = await database.Pessoas.findAll()
+      const todasAsPessoas = await database.Pessoas.scope('todos').findAll()
       return res.status(200).json(todasAsPessoas)
     } catch (err) {
       return res.status(500).json(err.message)
@@ -58,12 +67,12 @@ class PessoaController {
     }
   }
 
-  static async restauraPessoa(req,res){
-    const {id} = req.params
-    try{
-      await database.Pessoas.restore({where:{id:Number(id)}})
-      return res.status(200).json({message:`O id = ${id} foi restaurado` })
-    }catch(err){
+  static async restauraPessoa (req, res) {
+    const { id } = req.params
+    try {
+      await database.Pessoas.restore({ where: { id: Number(id) } })
+      return res.status(200).json({ message: `O id = ${id} foi restaurado` })
+    } catch (err) {
       return res.status(500).json(err.message)
     }
   }

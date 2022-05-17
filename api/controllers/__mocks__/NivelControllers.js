@@ -17,5 +17,5 @@ class NivelControllers {
 
   static async removerNivel (req, res) {
 
-}
+  }
 }
