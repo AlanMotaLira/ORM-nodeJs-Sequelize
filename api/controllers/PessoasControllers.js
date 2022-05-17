@@ -52,9 +52,9 @@ class PessoaController {
     const { id } = req.params
     try {
       await database.Pessoas.destroy({ where: { id: Number(id) } })
-      return res.state(200).json({ mensagem: `O id = ${id} removido` })
+      return res.status(200).json({ message: `O id = ${id} removido` })
     } catch (err) {
-      return res.status(500).json(err)
+      return res.status(500).json(err.message)
     }
   }
 
