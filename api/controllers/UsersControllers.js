@@ -36,7 +36,7 @@ class UserController {
     const newUse = req.body
     try {
       const newUseCreate = await database.Users.create(newUse)
-      return res.status(200).json(newUseCreate)
+      return res.status(201).json(newUseCreate)
     } catch (err) {
       return res.status(500).json(err)
     }
@@ -52,7 +52,7 @@ class UserController {
       const UserUpdated = await database.Users.findOne({
         where: { id: Number(id) }
       })
-      return res.status(200).json(UserUpdated)
+      return res.status(202).json(UserUpdated)
     } catch (err) {
       return res.status(500).json(err)
     }
@@ -62,7 +62,7 @@ class UserController {
     const { id } = req.params
     try {
       await database.Users.destroy({ where: { id: Number(id) } })
-      return res.status(200).json({ message: `O id = ${id} removido` })
+      return res.status(202).json({ message: `O id = ${id} removido` })
     } catch (err) {
       return res.status(500).json(err.message)
     }
@@ -72,7 +72,7 @@ class UserController {
     const { id } = req.params
     try {
       await database.Users.restore({ where: { id: Number(id) } })
-      return res.status(200).json({ message: `O id = ${id} foi restaurado` })
+      return res.status(202).json({ message: `O id = ${id} foi restaurado` })
     } catch (err) {
       return res.status(500).json(err.message)
     }
@@ -100,7 +100,7 @@ class UserController {
       const newEnrollmentCreated = await database.Enrollment.create(
         newEnrollment
       )
-      return res.status(200).json(newEnrollmentCreated)
+      return res.status(201).json(newEnrollmentCreated)
     } catch (err) {
       return res.status(500).json(err)
     }
@@ -145,9 +145,29 @@ class UserController {
         attributes: ['class_id'],
         group: ['class_id'],
         having: sequelize.literal(`count(class_id) >= ${limitPerClass}`)
-
       })
       return res.status(200).json(full.count)
+    } catch (err) {
+      return res.status(500).json(err.message)
+    }
+  }
+
+  static async cancelUser (req, res) {
+    const { id } = req.params
+    try {
+      await database.Users.update(
+        { active: false },
+        { where: { id: Number(id) } }
+      )
+      await database.Enrollment.update(
+        { status: 'cancelado' },
+        { where: { student_id: Number(id) } }
+      )
+      return res
+        .status(202)
+        .json({
+          message: `matriculas referente ao estudande do id ${id} foram canceladas`
+        })
     } catch (err) {
       return res.status(500).json(err.message)
     }

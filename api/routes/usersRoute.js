@@ -19,6 +19,7 @@ router
   .get('/users/enrollment/full', UserController.fullClasses)
   .post('/users', UserController.registerUser)
   .post('users/:idUser/enrollment', UserController.createEnrollment)
+  .post('/users/:id/cancel', UserController.cancelUser)
   .put('/users/:id', UserController.updateUser)
   .post('/users/:id', UserController.restoreUser)
   .delete('/users/:id', UserController.removeUser)
