@@ -1,9 +1,9 @@
-const NivelControllers = require('./NivelControllers')
+const LevelControllers = require('./LevelControllers')
 const UserController = require('./UsersControllers')
-const TurmaControllers = require('./TurmaControllers')
+const ClassControllers = require('./ClassControllers')
 
 module.exports = {
-  NivelControllers,
+  LevelControllers,
   UserController,
-  TurmaControllers
+  ClassControllers
 }

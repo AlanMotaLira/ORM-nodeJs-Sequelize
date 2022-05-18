@@ -1,16 +1,16 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict'
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
-    static associate(models) {
-      Users.hasMany(models.Turmas, {
-        foreignKey: "docente_id",
-      });
-      Users.hasMany(models.Matriculas, {
-        foreignKey: "estudante_id",
-        scope:{status:'confirmado'},
-        as:'registeredClasses'
-      });
+    static associate (models) {
+      Users.hasMany(models.Classes, {
+        foreignKey: 'teacher_id'
+      })
+      Users.hasMany(models.Enrollment, {
+        foreignKey: 'student_id',
+        scope: { status: 'confirmado' },
+        as: 'registeredClasses'
+      })
     }
   }
   Users.init(
@@ -20,9 +20,9 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           len: {
             args: [2, 50],
-            msg: "Por favor, informe o nome",
-          },
-        },
+            msg: 'Por favor, informe o nome'
+          }
+        }
       },
       active: DataTypes.BOOLEAN,
       email: {
@@ -30,23 +30,23 @@ module.exports = (sequelize, DataTypes) => {
         validate: {
           isEmail: {
             args: true,
-            msg: "dados de email inválido",
-          },
-        },
+            msg: 'dados de email inválido'
+          }
+        }
       },
-      role: DataTypes.STRING,
+      role: DataTypes.STRING
     },
     {
       sequelize,
-      modelName: "Users",
+      modelName: 'Users',
       paranoid: true,
       defaultScope: {
-        where: { active: true },
+        where: { active: true }
       },
       scopes: {
-        todos: { where: {} },
-      },
+        todos: { where: {} }
+      }
     }
-  );
-  return Users;
-};
+  )
+  return Users
+}

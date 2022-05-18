@@ -80,10 +80,10 @@ class UserController {
   static async returnUnicaEnrollment (req, res) {
     const { idUser, idRegistration } = req.params
     try {
-      const anEnrollment = await database.Matriculas.findOne({
+      const anEnrollment = await database.Enrollment.findOne({
         where: {
           id: Number(idRegistration),
-          estudante_id: Number(idUser)
+          student_id: Number(idUser)
         }
       })
       return res.status(200).json(anEnrollment)
@@ -94,9 +94,9 @@ class UserController {
 
   static async createEnrollment (req, res) {
     const { idUser } = req.params
-    const newEnrollment = { ...req.body, estudante_id: Number(idUser) }
+    const newEnrollment = { ...req.body, student_id: Number(idUser) }
     try {
-      const newEnrollmentCreated = await database.Matriculas.create(
+      const newEnrollmentCreated = await database.Enrollment.create(
         newEnrollment
       )
       return res.status(200).json(newEnrollmentCreated)
@@ -105,13 +105,13 @@ class UserController {
     }
   }
 
-  static async studentEnrollment(req,res){
-    const {studentId} = req.params
-    try{
-      const use = await database.Users.findOne({where:{id:Number(studentId)}})
+  static async studentEnrollment (req, res) {
+    const { studentId } = req.params
+    try {
+      const use = await database.Users.findOne({ where: { id: Number(studentId) } })
       const register = await use.getRegisteredClasses()
       return res.status(200).json(register)
-    }catch(err){
+    } catch (err) {
       return res.status(500).json(err.message)
     }
   }

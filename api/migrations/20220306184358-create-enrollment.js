@@ -1,15 +1,25 @@
 'use strict'
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createTable('Niveis', {
+    await queryInterface.createTable('Enrollment', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      descr_nivel: {
+      status: {
         type: Sequelize.STRING
+      },
+      student_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: 'Users', key: 'id' }
+      },
+      class_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: { model: 'Classes', key: 'id' }
       },
       createdAt: {
         allowNull: false,
@@ -22,6 +32,6 @@ module.exports = {
     })
   },
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('Niveis')
+    await queryInterface.dropTable('Enrollment')
   }
 }

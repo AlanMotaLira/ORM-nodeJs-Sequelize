@@ -3,19 +3,19 @@ const {
   Model
 } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
-  class Niveis extends Model {
+  class Levels extends Model {
     static associate (models) {
-      Niveis.hasMany(models.Turmas, {
-        foreignKey: 'nivel_id'
+      Levels.hasMany(models.Classes, {
+        foreignKey: 'level_id'
       })
     }
   }
-  Niveis.init({
-    descr_nivel: DataTypes.STRING
+  Levels.init({
+    descr_level: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'Niveis',
+    modelName: 'Levels',
     paranoid: true
   })
-  return Niveis
+  return Levels
 }
