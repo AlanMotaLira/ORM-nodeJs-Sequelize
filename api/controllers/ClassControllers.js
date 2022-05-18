@@ -1,4 +1,5 @@
-const database = require('../models')
+const { ClassServices } = require('../services')
+const classServices = new ClassServices()
 const sequelize = require('sequelize')
 
 class ClassControllers {
@@ -13,7 +14,7 @@ class ClassControllers {
     }
 
     try {
-      const allClasses = await database.Classes.findAll({ where })
+      const allClasses = await classServices.consultRegistration({ ...where })
       return res.status(200).json(allClasses)
     } catch (err) {
       return res.status(500).json(err.message)
@@ -23,8 +24,8 @@ class ClassControllers {
   static async singleClass (req, res) {
     const { id } = req.params
     try {
-      const oneClass = await database.Classes.findOne({
-        where: { id: Number(id) }
+      const oneClass = await classServices.consultSingleRegistration({
+        id: Number(id)
       })
       return res.status(200).json(oneClass)
     } catch (err) {
@@ -35,7 +36,7 @@ class ClassControllers {
   static async createClass (req, res) {
     const data = req.body
     try {
-      const newClass = await database.Classes.create(data)
+      const newClass = await classServices.createRecord(data)
       return res.status(200).json(newClass)
     } catch (err) {
       return res.status(500).json(err.message)
@@ -46,9 +47,9 @@ class ClassControllers {
     const { id } = req.params
     const data = req.body
     try {
-      await database.Classes.update(data, { where: { id: Number(id) } })
-      const updatedClass = await database.Classes.findOne({
-        where: { id: Number(id) }
+      await classServices.updateRegister(data, id)
+      const updatedClass = await classServices.consultSingleRegistration({
+        id: Number(id)
       })
       return res.status(200).json(updatedClass)
     } catch (err) {
@@ -59,8 +60,18 @@ class ClassControllers {
   static async removeClass (req, res) {
     const { id } = req.params
     try {
-      await database.Classes.destroy({ where: { id: Number(id) } })
+      await classServices.removeRecord(id)
       return res.status(200).json({ mensagem: `O id = ${id} removido` })
+    } catch (err) {
+      return res.status(500).json(err.message)
+    }
+  }
+
+  static async restoreClass (req, res) {
+    const { id } = req.params
+    try {
+      await classServices.restoreRecord(id)
+      return res.status(200).json({ mensagem: `O id = ${id} foi restaurado` })
     } catch (err) {
       return res.status(500).json(err.message)
     }

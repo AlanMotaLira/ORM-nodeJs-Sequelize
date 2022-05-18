@@ -11,7 +11,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Levels.init({
-    descr_level: DataTypes.STRING
+    descr_level: {
+      type: DataTypes.STRING,
+      validate: {
+        len: {
+          args: [2, 50],
+          msg: 'Por favor, informe o nível'
+        }
+      }
+    }
   }, {
     sequelize,
     modelName: 'Levels',

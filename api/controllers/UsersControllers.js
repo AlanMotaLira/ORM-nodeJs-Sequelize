@@ -1,10 +1,13 @@
+const { UsersServices, EnrollmentServices } = require('../services')
+const usersServices = new UsersServices()
+const enrollmentServices = new EnrollmentServices()
 const database = require('../models')
 const sequelize = require('sequelize')
 
 class UserController {
   static async consultActiveUsers (__, res) {
     try {
-      const activeUsers = await database.Users.findAll()
+      const activeUsers = await usersServices.consultRegistration()
       return res.status(200).json(activeUsers)
     } catch (err) {
       return res.status(500).json(err.message)
@@ -13,7 +16,7 @@ class UserController {
 
   static async consultAllUsers (__, res) {
     try {
-      const allUsers = await database.Users.scope('todos').findAll()
+      const allUsers = await usersServices.consultAll()
       return res.status(200).json(allUsers)
     } catch (err) {
       return res.status(500).json(err.message)
@@ -23,19 +26,19 @@ class UserController {
   static async consultSingleUser (req, res) {
     const { id } = req.params
     try {
-      const use = await database.Users.findOne({
-        where: { id: Number(id) }
+      const use = await usersServices.consultSingleRegistration({
+        id: Number(id)
       })
       return res.status(200).json(use)
     } catch (err) {
-      return res.status(500).json(err)
+      return res.status(500).json(err.message)
     }
   }
 
   static async registerUser (req, res) {
     const newUse = req.body
     try {
-      const newUseCreate = await database.Users.create(newUse)
+      const newUseCreate = await usersServices.createRecord(newUse)
       return res.status(201).json(newUseCreate)
     } catch (err) {
       return res.status(500).json(err)
@@ -46,11 +49,9 @@ class UserController {
     const { id } = req.params
     const updatedData = req.body
     try {
-      await database.Users.update(updatedData, {
-        where: { id: Number(id) }
-      })
-      const UserUpdated = await database.Users.findOne({
-        where: { id: Number(id) }
+      await usersServices.updateRegister(updatedData, Number(id))
+      const UserUpdated = await usersServices.consultSingleRegistration({
+        id: Number(id)
       })
       return res.status(202).json(UserUpdated)
     } catch (err) {
@@ -61,7 +62,7 @@ class UserController {
   static async removeUser (req, res) {
     const { id } = req.params
     try {
-      await database.Users.destroy({ where: { id: Number(id) } })
+      await usersServices.removeRecord(id)
       return res.status(202).json({ message: `O id = ${id} removido` })
     } catch (err) {
       return res.status(500).json(err.message)
@@ -71,21 +72,19 @@ class UserController {
   static async restoreUser (req, res) {
     const { id } = req.params
     try {
-      await database.Users.restore({ where: { id: Number(id) } })
+      await usersServices.restoreRecord(id)
       return res.status(202).json({ message: `O id = ${id} foi restaurado` })
     } catch (err) {
       return res.status(500).json(err.message)
     }
   }
 
-  static async returnUnicaEnrollment (req, res) {
+  static async consultSingleEnrollment (req, res) {
     const { idUser, idRegistration } = req.params
     try {
-      const anEnrollment = await database.Enrollment.findOne({
-        where: {
-          id: Number(idRegistration),
-          student_id: Number(idUser)
-        }
+      const anEnrollment = await enrollmentServices.consultSingleRegistration({
+        id: Number(idRegistration),
+        student_id: Number(idUser)
       })
       return res.status(200).json(anEnrollment)
     } catch (err) {
@@ -107,10 +106,10 @@ class UserController {
   }
 
   static async studentEnrollment (req, res) {
-    const { studentId } = req.params
+    const { id } = req.params
     try {
-      const use = await database.Users.findOne({
-        where: { id: Number(studentId) }
+      const use = await usersServices.consultSingleRegistration({
+        id: Number(id)
       })
       const register = await use.getRegisteredClasses()
       return res.status(200).json(register)

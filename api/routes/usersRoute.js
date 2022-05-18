@@ -9,9 +9,10 @@ router
   .get('/users/:id', UserController.consultSingleUser)
   .get(
     '/users/:idUser/enrollment/:idRegistration',
-    UserController.returnUnicaEnrollment
+    UserController.consultSingleEnrollment
   )
-  .get('/users/:studentId/enrollment', UserController.studentEnrollment)
+  // verificado até aqui
+  .get('/users/:id/enrollment', UserController.studentEnrollment)
   .get(
     '/users/enrollment/:classId/confirmed',
     UserController.returnEnrollmentsPorClasses
@@ -20,8 +21,8 @@ router
   .post('/users', UserController.registerUser)
   .post('users/:idUser/enrollment', UserController.createEnrollment)
   .post('/users/:id/cancel', UserController.cancelUser)
-  .put('/users/:id', UserController.updateUser)
   .post('/users/:id', UserController.restoreUser)
+  .put('/users/:id', UserController.updateUser)
   .delete('/users/:id', UserController.removeUser)
 
 module.exports = router
