@@ -1,0 +1,585 @@
+{
+	"info": {
+		"_postman_id": "cf3acd4f-8e93-478f-808c-419f21d5e375",
+		"name": "API ORM NodeJS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "usersRoute",
+			"item": [
+				{
+					"name": "Retornar usuarios ativos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retornar todos os usarios ativos ou não, que não foram removidos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/all",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar somente um usuário",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "retornar matricula especifica do usuário",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/1/enrollment/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"1",
+								"enrollment",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retorna as matriculas com o status confirmados do usuário",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/1/enrollment",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"1",
+								"enrollment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "retornar a quantidade de usuários confirmado pela a turma selecionada",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/enrollment/1/confirmed",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"enrollment",
+								"1",
+								"confirmed"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "retorna as turmas com o a turma completa, conforme estabelecido",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/enrollment/full",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"enrollment",
+								"full"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar usuário",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \n    \"name\": \"Walter\",\n    \"active\": true,\n    \"email\": \"walter@walter.com\",\n    \"role\": \"estudante\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "registrar nova matricula do usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \n    \"status\": \"confirmado\",\n    \"class_id\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/users/3/enrollment",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"3",
+								"enrollment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancelar usuário e todas as matriculas ",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/2/cancel",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"2",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ativar usuário registrada",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/7/restore",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"7",
+								"restore"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar dados do usuário",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{    \n    \"name\": \"Pedro\",\n    \"email\":\"pedro@pedro.com\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/users/7",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Desativar usuário registrado",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/users/7",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "classesRoute",
+			"item": [
+				{
+					"name": "retornar turmas registradas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/classes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"classes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retornar turmas filtrando por intervalo de datas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/classes?initialDate=\"2020-01-01&finalDate=\"2020-03-01\"",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"classes"
+							],
+							"query": [
+								{
+									"key": "initialDate",
+									"value": "\"2020-01-01"
+								},
+								{
+									"key": "finalDate",
+									"value": "\"2020-03-01\""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "criar nova turma",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"start_date\": \"2022-02-01\",\n        \"teacher_id\": 6,\n        \"level_id\": 1\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/classes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"classes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "restaurar turma deletada",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/classes/5/restore",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"classes",
+								"5",
+								"restore"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualizar dados da turma registrada",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"start_date\": \"2022-02-01\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/classes/5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"classes",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remover turma",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/classes/5",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"classes",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "levelsRoute",
+			"item": [
+				{
+					"name": "consultar níveis registrados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/levels",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"levels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "consultar nível selecionado",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/levels/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"levels",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "registrar novo nível",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"descr_level\": \"super avançado\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/levels",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"levels"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "restaurar nível que foi deletado",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/levels/6/restore",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"levels",
+								"6",
+								"restore"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "atualizar nível registrado",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\n        \"descr_level\": \"super avançado 2\"\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/levels/6",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"levels",
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remover nível registrado",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/levels/6",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"levels",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

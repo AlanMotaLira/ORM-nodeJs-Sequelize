@@ -1,7 +1,6 @@
 const { UsersServices, EnrollmentServices } = require('../services')
 const usersServices = new UsersServices()
 const enrollmentServices = new EnrollmentServices()
-const database = require('../models')
 const sequelize = require('sequelize')
 
 class UserController {
@@ -96,7 +95,7 @@ class UserController {
     const { idUser } = req.params
     const newEnrollment = { ...req.body, student_id: Number(idUser) }
     try {
-      const newEnrollmentCreated = await database.Enrollment.create(
+      const newEnrollmentCreated = await enrollmentServices.createRecord(
         newEnrollment
       )
       return res.status(201).json(newEnrollmentCreated)
@@ -121,13 +120,13 @@ class UserController {
   static async returnEnrollmentsPorClasses (req, res) {
     const { classId } = req.params
     try {
-      const allEnrollment = await database.Enrollment.findAndCountAll({
-        where: {
+      const allEnrollment = await enrollmentServices.countEnrollment(
+        {
           class_id: Number(classId),
           status: 'confirmado'
         },
-        order: [['student_id', 'DESC']]
-      })
+        { order: [['student_id', 'DESC']] }
+      )
       res.status(200).json(allEnrollment)
     } catch (err) {
       return res.status(500).json(err.message)
@@ -137,14 +136,16 @@ class UserController {
   static async fullClasses (__, res) {
     const limitPerClass = 2
     try {
-      const full = await database.Enrollment.findAndCountAll({
-        where: {
+      const full = await enrollmentServices.countEnrollment(
+        {
           status: 'confirmado'
         },
-        attributes: ['class_id'],
-        group: ['class_id'],
-        having: sequelize.literal(`count(class_id) >= ${limitPerClass}`)
-      })
+        {
+          attributes: ['class_id'],
+          group: ['class_id'],
+          having: sequelize.literal(`count(class_id) >= ${limitPerClass}`)
+        }
+      )
       return res.status(200).json(full.count)
     } catch (err) {
       return res.status(500).json(err.message)
@@ -154,20 +155,9 @@ class UserController {
   static async cancelUser (req, res) {
     const { id } = req.params
     try {
-      database.sequelize.transaction(async (t) => {
-        await database.Users.update(
-          { active: false },
-          { where: { id: Number(id) } },
-          { transaction: t }
-        )
-        await database.Enrollment.update(
-          { status: 'cancelado' },
-          { where: { student_id: Number(id) } },
-          { transaction: t }
-        )
-        return res.status(202).json({
-          message: `matriculas referente ao estudande do id ${id} foram canceladas`
-        })
+      usersServices.removeUseAndEnrollment(id)
+      return res.status(202).json({
+        message: `matriculas referente ao estudande do id ${id} foram canceladas`
       })
     } catch (err) {
       return res.status(500).json(err.message)

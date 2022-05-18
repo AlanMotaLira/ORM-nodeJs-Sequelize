@@ -11,7 +11,7 @@ router
     '/users/:idUser/enrollment/:idRegistration',
     UserController.consultSingleEnrollment
   )
-  // verificado até aqui
+
   .get('/users/:id/enrollment', UserController.studentEnrollment)
   .get(
     '/users/enrollment/:classId/confirmed',
@@ -19,9 +19,9 @@ router
   )
   .get('/users/enrollment/full', UserController.fullClasses)
   .post('/users', UserController.registerUser)
-  .post('users/:idUser/enrollment', UserController.createEnrollment)
+  .post('/users/:idUser/enrollment', UserController.createEnrollment)
   .post('/users/:id/cancel', UserController.cancelUser)
-  .post('/users/:id', UserController.restoreUser)
+  .post('/users/:id/restore', UserController.restoreUser)
   .put('/users/:id', UserController.updateUser)
   .delete('/users/:id', UserController.removeUser)
 
