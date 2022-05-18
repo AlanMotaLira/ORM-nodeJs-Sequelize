@@ -1,19 +1,21 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Pessoas extends Model {
+  class Users extends Model {
     static associate(models) {
-      Pessoas.hasMany(models.Turmas, {
+      Users.hasMany(models.Turmas, {
         foreignKey: "docente_id",
       });
-      Pessoas.hasMany(models.Matriculas, {
+      Users.hasMany(models.Matriculas, {
         foreignKey: "estudante_id",
+        scope:{status:'confirmado'},
+        as:'registeredClasses'
       });
     }
   }
-  Pessoas.init(
+  Users.init(
     {
-      nome: {
+      name: {
         type: DataTypes.STRING,
         validate: {
           len: {
@@ -22,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
           },
         },
       },
-      ativo: DataTypes.BOOLEAN,
+      active: DataTypes.BOOLEAN,
       email: {
         type: DataTypes.STRING,
         validate: {
@@ -36,15 +38,15 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "Pessoas",
+      modelName: "Users",
       paranoid: true,
       defaultScope: {
-        where: { ativo: true },
+        where: { active: true },
       },
       scopes: {
         todos: { where: {} },
       },
     }
   );
-  return Pessoas;
+  return Users;
 };

@@ -1,8 +1,8 @@
 const dataModel = [
   {
     id: 1,
-    nome: 'Ana Souza',
-    ativo: true,
+    name: 'Ana Souza',
+    active: true,
     email: 'ana@ana.com',
     role: 'estudante',
     createdAt: '2022-05-16T18:18:33.000Z',
@@ -10,8 +10,8 @@ const dataModel = [
   },
   {
     id: 2,
-    nome: 'Marcos Cintra',
-    ativo: false,
+    name: 'Marcos Cintra',
+    active: false,
     email: 'marcos@marcos.com',
     role: 'estudante',
     createdAt: '2022-05-16T18:18:33.000Z',
@@ -19,8 +19,8 @@ const dataModel = [
   },
   {
     id: 3,
-    nome: 'Felipe Cardoso',
-    ativo: true,
+    name: 'Felipe Cardoso',
+    active: true,
     email: 'felipe@felipe.com',
     role: 'estudante',
     createdAt: '2022-05-16T18:18:33.000Z',
@@ -28,8 +28,8 @@ const dataModel = [
   },
   {
     id: 4,
-    nome: 'Sandra Gomes',
-    ativo: false,
+    name: 'Sandra Gomes',
+    active: false,
     email: 'sandra@sandra.com',
     role: 'estudante',
     createdAt: '2022-05-16T18:18:33.000Z',
@@ -37,8 +37,8 @@ const dataModel = [
   },
   {
     id: 5,
-    nome: 'Paula Morais',
-    ativo: true,
+    name: 'Paula Morais',
+    active: true,
     email: 'paula@paula.com',
     role: 'docente',
     createdAt: '2022-05-16T18:18:33.000Z',
@@ -46,8 +46,8 @@ const dataModel = [
   },
   {
     id: 6,
-    nome: 'Sergio Lopes',
-    ativo: true,
+    name: 'Sergio Lopes',
+    active: true,
     email: 'sergio@sergio.com',
     role: 'docente',
     createdAt: '2022-05-16T18:18:33.000Z',
@@ -55,20 +55,20 @@ const dataModel = [
   }
 ]
 
-class PessoaController {
-  static async pegaTodasAsPessoas (req, res) {
+class UserController {
+  static async consultAllUsers (req, res) {
     return dataModel
   }
 
-  static async pegaUmaPessoa (req, res) {
+  static async consultSingleUser (req, res) {
     return dataModel[req]
   }
 
-  static async criarPessoa (req, res) {
+  static async registerUser (req, res) {
     return {
       id: 1,
-      nome: 'Ana Souza',
-      ativo: true,
+      name: 'Ana Souza',
+      active: true,
       email: 'ana@ana.com',
       role: 'estudante',
       createdAt: '2022-05-16T18:18:33.000Z',
@@ -76,15 +76,15 @@ class PessoaController {
     }
   }
 
-  static async atualizarRegistro (req, res) {}
+  static async updateUser (req, res) {}
 
-  static async removerPessoa (req, res) {
+  static async removeUser (req, res) {
     return res.state(200).json({ mensagem: 'O usuario foi removido' })
   }
 
-  static async pegaUmaMatricula (req, res) {}
+  static async returnUnicaEnrollment (req, res) {}
 
-  static async criarMatricula (req, res) {}
+  static async createEnrollment (req, res) {}
 }
 
-module.exports = PessoaController
+module.exports = UserController

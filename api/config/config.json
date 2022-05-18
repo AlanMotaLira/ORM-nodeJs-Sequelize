@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": "abcdefg",
-    "database": "escola_ingles",
+    "database": "english_school",
     "host": "mysql-orm",
     "dialect": "mysql"
   },
