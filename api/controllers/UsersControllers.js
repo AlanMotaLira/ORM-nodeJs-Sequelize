@@ -155,19 +155,21 @@ class UserController {
   static async cancelUser (req, res) {
     const { id } = req.params
     try {
-      await database.Users.update(
-        { active: false },
-        { where: { id: Number(id) } }
-      )
-      await database.Enrollment.update(
-        { status: 'cancelado' },
-        { where: { student_id: Number(id) } }
-      )
-      return res
-        .status(202)
-        .json({
+      database.sequelize.transaction(async (t) => {
+        await database.Users.update(
+          { active: false },
+          { where: { id: Number(id) } },
+          { transaction: t }
+        )
+        await database.Enrollment.update(
+          { status: 'cancelado' },
+          { where: { student_id: Number(id) } },
+          { transaction: t }
+        )
+        return res.status(202).json({
           message: `matriculas referente ao estudande do id ${id} foram canceladas`
         })
+      })
     } catch (err) {
       return res.status(500).json(err.message)
     }
