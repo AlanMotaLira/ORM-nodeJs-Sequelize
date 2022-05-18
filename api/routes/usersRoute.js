@@ -12,6 +12,11 @@ router
     UserController.returnUnicaEnrollment
   )
   .get('/users/:studentId/enrollment', UserController.studentEnrollment)
+  .get(
+    '/users/enrollment/:classId/confirmed',
+    UserController.returnEnrollmentsPorClasses
+  )
+  .get('/users/enrollment/full', UserController.fullClasses)
   .post('/users', UserController.registerUser)
   .post('users/:idUser/enrollment', UserController.createEnrollment)
   .put('/users/:id', UserController.updateUser)

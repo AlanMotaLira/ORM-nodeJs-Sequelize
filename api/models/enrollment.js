@@ -18,7 +18,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: 'Enrollment',
-      paranoid: true
+      paranoid: true,
+      freezeTableName: true
     }
   )
   return Enrollment

@@ -1,4 +1,5 @@
 const database = require('../models')
+const sequelize = require('sequelize')
 
 class UserController {
   static async consultActiveUsers (__, res) {
@@ -108,9 +109,45 @@ class UserController {
   static async studentEnrollment (req, res) {
     const { studentId } = req.params
     try {
-      const use = await database.Users.findOne({ where: { id: Number(studentId) } })
+      const use = await database.Users.findOne({
+        where: { id: Number(studentId) }
+      })
       const register = await use.getRegisteredClasses()
       return res.status(200).json(register)
+    } catch (err) {
+      return res.status(500).json(err.message)
+    }
+  }
+
+  static async returnEnrollmentsPorClasses (req, res) {
+    const { classId } = req.params
+    try {
+      const allEnrollment = await database.Enrollment.findAndCountAll({
+        where: {
+          class_id: Number(classId),
+          status: 'confirmado'
+        },
+        order: [['student_id', 'DESC']]
+      })
+      res.status(200).json(allEnrollment)
+    } catch (err) {
+      return res.status(500).json(err.message)
+    }
+  }
+
+  static async fullClasses (__, res) {
+    const limitPerClass = 2
+    try {
+      const full = await database.Enrollment.findAndCountAll({
+        where: {
+          status: 'confirmado'
+        },
+        attributes: ['class_id'],
+        group: ['class_id'],
+        having: sequelize.literal(`count(class_id) >= ${limitPerClass}`)
+
+      })
+      return res.status(200).json(full.count)
     } catch (err) {
       return res.status(500).json(err.message)
     }
